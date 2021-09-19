@@ -36,3 +36,15 @@
     transform: rotate(360deg);
   }
 }
+.product-container{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  justify-content: center;
+  align-items: center;
+  margin: 20px;
+}
+.product{
+  background-color: rgb(4, 4, 94);
+  margin: 20px;
+  border-radius: 25px;
+}
