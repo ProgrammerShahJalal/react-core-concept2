@@ -1,19 +1,41 @@
 import logo from './logo.svg';
 import './App.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 function App() {
 
   return (
-    <div className="App product-container">
+    <div className="App">
       <Counter></Counter>
-      <Counter></Counter>
-      <Counter></Counter>
-      <Counter></Counter>
-      <Counter></Counter>
-      <Counter></Counter>
+      <Clear></Clear>
+      <ExternalUser></ExternalUser>
     </div>
   );
+}
+function ExternalUser() {
+  const [users, setUsers] = useState([]);
+  useEffect(() => {
+    fetch('https://jsonplaceholder.typicode.com/users')
+      .then(res => res.json())
+      .then(data => setUsers(data))
+  }, [])
+
+  return (
+    <div>
+      <h2>External User</h2>
+      {
+        users.map(user => <User name={user.name} email={user.email}></User>)
+      }
+    </div>
+  )
+}
+function User(props) {
+  return (
+    <div>
+      <h4>Name: {props.name}</h4>
+      <p>Email: {props.email}</p>
+    </div>
+  )
 }
 function Counter() {
   const [count, setCount] = useState(0);
@@ -23,6 +45,19 @@ function Counter() {
   const handleDecrese = () => {
     setCount(count - 1);
   };
+  return (
+    <div>
+      <h2>Count: {count}</h2>
+      <button onClick={handleIncrese}>Increase</button>
+      <button onClick={handleDecrese}>Decrease</button>
+    </div>
+  )
+}
+function Clear() {
+  const [count, setCount] = useState(0);
+  const handleIncrese = () => {
+    setCount(count + 1);
+  };
   const clear = () => {
     setCount(count - count);
   };
@@ -30,7 +65,6 @@ function Counter() {
     <div>
       <h2>Count: {count}</h2>
       <button onClick={handleIncrese}>Increase</button>
-      <button onClick={handleDecrese}>Decrease</button>
       <button onClick={clear}>Clear</button>
     </div>
   )
